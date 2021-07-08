@@ -9,18 +9,16 @@
         </span>
       </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col m-3 text-primary">
         <h4>
           {{ state.answers }}
         </h4>
       </div>
-    </div>
+    </div> -->
     <div class="row">
       <div class="col">
-        <button type="button" @click="incrementQuestion" class="btn btn-primary">
-          New Question
-        </button>
+        <Answers v-for="(answer, index) in state.answers" :key="index" :answer-prop="answer" @click="incrementQuestion" />
       </div>
     </div>
   </div>
