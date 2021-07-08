@@ -34,6 +34,10 @@ class QuestionService {
     AppState.question = getAtInd
     this.scrambleAnswers(AppState.question.incorrect_answers, AppState.question.correct_answer)
   }
+
+  async checkAnswer(answer) {
+    logger.log('logging the selected choice: ', answer)
+  }
 }
 
 // This code is the instance of the class above. It sets the Constant questionService as the instance, then exports it.
