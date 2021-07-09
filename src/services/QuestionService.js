@@ -37,6 +37,9 @@ class QuestionService {
 
   async checkAnswer(answer) {
     logger.log('logging the selected choice: ', answer)
+    // if (answer !== AppState.question.correct_answer) {
+    //   logger.log()
+    // }
   }
 }
 
