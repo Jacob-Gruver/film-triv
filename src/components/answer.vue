@@ -1,12 +1,12 @@
 <template>
   <div class="Answers m-3 flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <router-link :to="{ name: 'QuestionPage', params: { string: answerProp } }">
-      <button type="button" class="btn btn-primary">
-        <h4>
-          {{ answerProp }}
-        </h4>
-      </button>
-    </router-link>
+    <!-- <router-link :to="{ name: 'QuestionPage', params: { string: answerProp } }"> -->
+    <button type="button" class="btn btn-primary">
+      <h4>
+        {{ answerProp }}
+      </h4>
+    </button>
+    <!-- </router-link> -->
   </div>
 </template>
 

@@ -30,15 +30,9 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">
-                  {{ state.question.correct_answer }}
+                <h5 class="modal-title" v-if="print === true">
+                  The correct answer is: {{ state.question.correct_answer }}
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Body
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -66,6 +60,7 @@ export default {
   name: 'Questionare',
 
   setup() {
+    let print = true
     const route = useRoute()
     const state = reactive({
       questions: computed(() => AppState.questions),
@@ -83,7 +78,9 @@ export default {
     return {
       state,
       route,
+      print,
       incrementQuestion() {
+        print = false
         const index = AppState.index
         try {
           questionService.cycleQuestions(index)
@@ -92,12 +89,7 @@ export default {
         }
       },
       async chooseAnswer() {
-        try {
-          logger.log('logging prop before going to the service ', route)
-          questionService.checkAnswer(route.params.string)
-        } catch (error) {
-          logger.error(error)
-        }
+
       }
     }
   }
