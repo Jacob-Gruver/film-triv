@@ -16,7 +16,6 @@
                  :answer-prop="answer"
                  data-toggle="modal"
                  data-target="#modelId"
-                 @click="chooseAnswer"
         />
 
         <!-- Modal -->
@@ -30,7 +29,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" v-if="print === true">
+                <h5 class="modal-title">
                   The correct answer is: {{ state.question.correct_answer }}
                 </h5>
               </div>
@@ -59,7 +58,6 @@ export default {
   name: 'Questionare',
 
   setup() {
-    let print = false
     const state = reactive({
       questions: computed(() => AppState.questions),
       question: computed(() => AppState.question),
@@ -74,18 +72,12 @@ export default {
     })
     return {
       state,
-      print,
       incrementQuestion() {
-        print = false
         try {
           questionService.cycleQuestions(AppState.index)
         } catch (error) {
           logger.error(error)
         }
-      },
-      async chooseAnswer() {
-        print = true
-        logger.log()
       }
     }
   }
