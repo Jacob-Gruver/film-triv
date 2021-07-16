@@ -1,6 +1,6 @@
 <template>
   <div class="Answers m-3 flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <button type="button" class="btn btn-primary" @click="chooseAnswer">
+    <button type="button" class="btn btn-primary">
       <h4>
         {{ answerProp }}
       </h4>
@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import { logger } from '../utils/Logger'
+// import { logger } from '../utils/Logger'
 import { reactive, computed } from 'vue'
-import { questionService } from '../services/QuestionService'
+// import { questionService } from '../services/QuestionService'
 
 export default {
   name: 'Answers',
@@ -26,13 +26,14 @@ export default {
       prop: computed(() => props.answerProp)
     })
     return {
-      async chooseAnswer() {
-        try {
-          questionService.checkAnswer(answerChoice)
-        } catch (error) {
-          logger.error(error)
-        }
-      }
+      answerChoice
+      // async chooseAnswer() {
+      //   try {
+      //     questionService.checkAnswer(answerChoice.prop)
+      //   } catch (error) {
+      //     logger.error(error)
+      //   }
+      // }
     }
   }
 }
