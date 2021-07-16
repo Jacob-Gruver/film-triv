@@ -38,7 +38,7 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                   Try Again?
                 </button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="incrementQuestion">
+                <button type="button" class="btn btn-primary" @click="incrementQuestion" data-dismiss="modal">
                   Continue
                 </button>
               </div>
@@ -51,7 +51,6 @@
 </template>
 
 <script>
-import { useRoute } from 'vue-router'
 import { onMounted, reactive, computed } from 'vue'
 import { AppState } from '../AppState'
 import { questionService } from '../services/QuestionService'
@@ -60,38 +59,36 @@ export default {
   name: 'Questionare',
 
   setup() {
-    let print = true
-    const route = useRoute()
+    let print = false
     const state = reactive({
       questions: computed(() => AppState.questions),
       question: computed(() => AppState.question),
       answers: computed(() => AppState.answers)
     })
     onMounted(async() => {
-      const index = AppState.index
       try {
-        questionService.getQuestion(index)
+        questionService.getQuestion(AppState.index)
       } catch (error) {
         logger.error(error)
       }
     })
     return {
       state,
-      route,
       print,
       incrementQuestion() {
         print = false
-        const index = AppState.index
         try {
-          questionService.cycleQuestions(index)
+          questionService.cycleQuestions(AppState.index)
         } catch (error) {
           logger.error(error)
         }
       },
       async chooseAnswer() {
-
+        print = true
+        logger.log()
       }
     }
   }
+
 }
 </script>
