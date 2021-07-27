@@ -16,6 +16,7 @@
                  :answer-prop="answer"
                  data-toggle="modal"
                  data-target="#modelId"
+                 @click="chooseAnswer"
         />
 
         <!-- Modal -->
@@ -29,15 +30,18 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">
-                  The correct answer is: {{ state.question.correct_answer }}
+                <h5 class="modal-title text-success" v-if="state.choice === true">
+                  Correct
+                </h5>
+                <h5 class="modal-title text-danger" v-else>
+                  Incorrect
                 </h5>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-secondary" v-if="state.choice === false" data-dismiss="modal">
                   Try Again?
                 </button>
-                <button type="button" class="btn btn-primary" @click="incrementQuestion" data-dismiss="modal">
+                <button type="button" class="btn btn-primary" @click="incrementQuestion" v-else data-dismiss="modal">
                   Continue
                 </button>
               </div>
@@ -50,6 +54,7 @@
 </template>
 
 <script>
+import { useRoute } from 'vue-router'
 import { onMounted, reactive, computed } from 'vue'
 import { AppState } from '../AppState'
 import { questionService } from '../services/QuestionService'
@@ -58,10 +63,12 @@ export default {
   name: 'Questionare',
 
   setup() {
+    const route = useRoute()
     const state = reactive({
       questions: computed(() => AppState.questions),
-      question: computed(() => AppState.question),
-      answers: computed(() => AppState.answers)
+      question: computed(() => decodeURI(AppState.question)),
+      answers: computed(() => AppState.answers),
+      choice: computed(() => AppState.choice)
     })
     onMounted(async() => {
       try {
@@ -75,6 +82,13 @@ export default {
       incrementQuestion() {
         try {
           questionService.cycleQuestions(AppState.index)
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+      async chooseAnswer() {
+        try {
+          questionService.checkAnswer(route.params.answerChoice)
         } catch (error) {
           logger.error(error)
         }

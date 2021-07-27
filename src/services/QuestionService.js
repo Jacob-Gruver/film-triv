@@ -20,7 +20,9 @@ class QuestionService {
   async scrambleAnswers(wrongA, rightA) {
     const newArr = wrongA
     newArr.push(rightA)
-    AppState.answers = newArr
+    const scrambled = newArr.sort(() => Math.random() - 0.5)
+    AppState.answers = scrambled
+    logger.log('Logging scrambled', scrambled)
   }
 
   async cycleQuestions(index) {
@@ -38,8 +40,10 @@ class QuestionService {
   async checkAnswer(answer) {
     logger.log('logging the selected choice: ', answer)
     if (answer !== AppState.question.correct_answer) {
+      AppState.choice = false
       logger.log('Incorrect')
     } else {
+      AppState.choice = true
       logger.log('Correct')
     }
   }
