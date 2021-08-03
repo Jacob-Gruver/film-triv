@@ -6,9 +6,12 @@ class QuestionService {
   async getQuestion(index) {
     try {
       const res = await api.get()
-      logger.log('Logging all questions in the service: => ', res.data.results)
+      // logger.log('Logging all questions in the service: => ', res.data.results)
       AppState.questions = res.data.results
+      // const getAtInd = this.scrubChar(AppState.questions[index])
       const getAtInd = AppState.questions[index]
+      // const scrubbedChar = this.scrubChar(getAtInd.question)
+      logger.log('Logging the answer', getAtInd.question)
       AppState.question = getAtInd
       AppState.index++
       this.scrambleAnswers(AppState.question.incorrect_answers, AppState.question.correct_answer)
@@ -47,6 +50,14 @@ class QuestionService {
       logger.log('Correct')
     }
   }
+
+  // async scrubChar(string) {
+  //   try {
+  //     string.replace(/;/g, '')
+  //   } catch (error) {
+  //     logger.error(error)
+  //   }
+  // }
 }
 
 // This code is the instance of the class above. It sets the Constant questionService as the instance, then exports it.

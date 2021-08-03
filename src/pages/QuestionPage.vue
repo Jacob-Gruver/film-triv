@@ -4,7 +4,7 @@
       <div class="col m-3">
         <span>
           <h3>
-            {{ state.question.question }}
+            {{ state.question }}
           </h3>
         </span>
       </div>
@@ -66,7 +66,7 @@ export default {
     const route = useRoute()
     const state = reactive({
       questions: computed(() => AppState.questions),
-      question: computed(() => decodeURI(AppState.question)),
+      question: computed(() => AppState.question.question),
       answers: computed(() => AppState.answers),
       choice: computed(() => AppState.choice)
     })
