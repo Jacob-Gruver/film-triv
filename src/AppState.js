@@ -6,6 +6,7 @@ export const AppState = reactive({
   account: {},
   questions: [],
   question: {},
+  scrubbedQuest: '',
   answers: [],
   choice: false,
   index: 0

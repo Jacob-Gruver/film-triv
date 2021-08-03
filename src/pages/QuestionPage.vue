@@ -38,10 +38,10 @@
                 </h5>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" v-if="state.choice === false" data-dismiss="modal">
+                <!-- <button type="button" class="btn btn-secondary" v-if="state.choice === false" data-dismiss="modal">
                   Try Again?
-                </button>
-                <button type="button" class="btn btn-primary" @click="incrementQuestion" v-else data-dismiss="modal">
+                </button> -->
+                <button type="button" class="btn btn-primary" @click="incrementQuestion" data-dismiss="modal">
                   Continue
                 </button>
               </div>
@@ -66,7 +66,7 @@ export default {
     const route = useRoute()
     const state = reactive({
       questions: computed(() => AppState.questions),
-      question: computed(() => AppState.question.question),
+      question: computed(() => AppState.scrubbedQuest),
       answers: computed(() => AppState.answers),
       choice: computed(() => AppState.choice)
     })
