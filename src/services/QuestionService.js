@@ -6,7 +6,6 @@ class QuestionService {
   async getQuestion(index) {
     try {
       const res = await api.get()
-      // logger.log('Logging all questions in the service: => ', res.data.results)
       AppState.questions = res.data.results
       const getAtInd = AppState.questions[index]
       this.scrubChar(getAtInd.question)
@@ -22,6 +21,9 @@ class QuestionService {
     const newArr = wrongA
     newArr.push(rightA)
     const scrambled = newArr.sort(() => Math.random() - 0.5)
+    scrambled.forEach(answer => {
+      this.scrubAns(answer)
+    })
     AppState.answers = scrambled
     logger.log('Logging scrambled', scrambled)
   }
@@ -35,6 +37,7 @@ class QuestionService {
     }
     const getAtInd = AppState.questions[index]
     AppState.question = getAtInd
+    this.scrubChar(getAtInd.question)
     this.scrambleAnswers(AppState.question.incorrect_answers, AppState.question.correct_answer)
   }
 
@@ -51,10 +54,16 @@ class QuestionService {
   }
 
   async scrubChar(string) {
-    const scrubbing = await string.replace(/;/g, '')
-    decodeURI(scrubbing)
+    const scrubbing = await string.replace(/;|&|quot|#039/gi, '')
+    // decodeURI(scrubbing)
     logger.log(scrubbing)
     AppState.scrubbedQuest = scrubbing
+  }
+
+  async scrubAns(string) {
+    const scrubbing = await string.replace(/;|&|quot|#039/gi, '')
+    // decodeURI(scrubbing)
+    logger.log(scrubbing)
   }
 }
 
