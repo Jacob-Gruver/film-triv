@@ -8,6 +8,7 @@ class QuestionService {
       const res = await api.get()
       AppState.questions = res.data.results
       const getAtInd = AppState.questions[index]
+      logger.log(AppState.question)
       this.scrubChar(getAtInd.question)
       AppState.question = getAtInd
       AppState.index++
@@ -54,16 +55,40 @@ class QuestionService {
   }
 
   async scrubChar(string) {
-    const scrubbing = await string.replace(/;|&|quot|#039/gi, '')
-    // decodeURI(scrubbing)
-    logger.log(scrubbing)
-    AppState.scrubbedQuest = scrubbing
+    try {
+      const scrubbing = await string.replace(/&quot;/g, '"') && await string.replace(/&#039;/g, "'")
+      logger.log(scrubbing)
+      AppState.scrubbedQuest = scrubbing
+      this.scrubIng(string)
+    } catch (error) {
+      logger.log(error)
+    }
+  }
+
+  // Make a function that itterates over a string, lookes for a specific string of numbers and letters, and replace it with quotes
+
+  async scrubIng(string) {
+    try {
+      for (let i = 0; i < string.length; i++) {
+        const char = string[i]
+        if (char === '&') {
+          const scrubbing = await string.replace(/&quot;/g, '"') && await string.replace(/&#039;/g, "'")
+          logger.log('scrubbing function output', scrubbing)
+        }
+      }
+    } catch (error) {
+      logger.log(error)
+    }
   }
 
   async scrubAns(string) {
-    const scrubbing = await string.replace(/;|&|quot|#039/gi, '')
-    // decodeURI(scrubbing)
-    logger.log(scrubbing)
+    try {
+      const scrubbing = await string.replace(/&quot;/g, '"')
+      // decodeURI(scrubbing)
+      logger.log(scrubbing)
+    } catch (error) {
+      logger.log(error)
+    }
   }
 }
 
