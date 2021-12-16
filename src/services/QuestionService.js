@@ -71,7 +71,7 @@ class QuestionService {
     try {
       for (let i = 0; i < string.length; i++) {
         const char = string[i]
-        if (char === '&') {
+        if (char === '&quot;') {
           const scrubbing = await string.replace(/&quot;/g, '"') && await string.replace(/&#039;/g, "'")
           logger.log('scrubbing function output', scrubbing)
         }
