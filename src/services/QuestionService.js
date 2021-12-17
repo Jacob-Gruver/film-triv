@@ -54,9 +54,20 @@ class QuestionService {
     }
   }
 
+  // async scrubChar(string) {
+  //   try {
+  //     const scrubbing = await string.replace(/&quot;/g, '"') && await string.replace(/&#039;/g, "'")
+  //     logger.log(scrubbing)
+  //     AppState.scrubbedQuest = scrubbing
+  //     this.scrubIng(string)
+  //   } catch (error) {
+  //     logger.log(error)
+  //   }
+  // }
+
   async scrubChar(string) {
     try {
-      const scrubbing = await string.replace(/&quot;/g, '"') && await string.replace(/&#039;/g, "'")
+      const scrubbing = await JSON.stringify(string)
       logger.log(scrubbing)
       AppState.scrubbedQuest = scrubbing
       this.scrubIng(string)
@@ -72,7 +83,8 @@ class QuestionService {
       for (let i = 0; i < string.length; i++) {
         const char = string[i]
         if (char === '&quot;') {
-          const scrubbing = await string.replace(/&quot;/g, '"') && await string.replace(/&#039;/g, "'")
+          const scrubbing = await string.replace(/&quot;/g, '"')
+          // && await string.replace(/&#039;/g, "'")
           logger.log('scrubbing function output', scrubbing)
         }
       }
